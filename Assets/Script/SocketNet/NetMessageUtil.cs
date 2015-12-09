@@ -1,15 +1,22 @@
-﻿using GameProtocol;
+﻿using Assets.Script;
+using GameProtocol;
 using NetFrame.Auto;
 using UnityEngine;
 
 
-public class NetMessageUtil : MonoBehaviour
+public class 
+    NetMessageUtil : MonoBehaviour
 {
     private IHandler login;
-
+    private IHandler user;
+    private IHandler match;
+    private IHandler select;
     void Start()
     {
         login = GetComponent<LoginHandler>();
+        user = GetComponent<UserHandler>();
+        match = GetComponent<MatchHandler>();
+        select = GetComponent<SelectHandler>();
     }
     void Update()
     {
@@ -32,6 +39,15 @@ public class NetMessageUtil : MonoBehaviour
         {
             case Protocol.TYPE_LOGIN:
                 login.MessageReceive(model);
+                break;
+            case Protocol.TYPE_USER:
+                user.MessageReceive(model);
+                break;
+            case Protocol.TYPE_MATCH:
+                match.MessageReceive(model);
+                break;
+            case Protocol.TYPE_SELECT:
+                select.MessageReceive(model);
                 break;
         }
     }
