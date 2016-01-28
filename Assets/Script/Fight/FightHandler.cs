@@ -52,29 +52,43 @@ namespace Assets.Script.Fight
             string path = null;
             foreach (AbsFightModel item in model.teamOne)
             {
+                GameObject go = null;
                 if (item.Type == ModelType.HUMAN)
                 {
                     path = "Player/" + item.Code;
-                    this.teamOne.Add(item.Id, Load(path, start1));
+                    go = Load(path, start1);
+                    this.teamOne.Add(item.Id,go );
                 }
                 else
                 {
                     path = "Build/1_" + item.Code;
                     this.teamOne.Add(item.Id, Load(path, position1[item.Code - 1]));
                 }
+                if(item.Id == GameData.user.ID)
+                {
+                    FightScene.Instance.InitView((FightPlayerModel)item,go);
+                    FightScene.Instance.LookAt();
+                }
             }
 
             foreach (AbsFightModel item in model.teamTwo)
             {
+                GameObject go = null;
                 if (item.Type == ModelType.HUMAN)
                 {
                     path = "Player/" + item.Code;
-                    this.teamTwo.Add(item.Id, Load(path, start2));
+                    go = Load(path, start2);
+                    this.teamTwo.Add(item.Id, go);
                 }
                 else
                 {
                     path = "Build/2_" + item.Code;
                     this.teamTwo.Add(item.Id, Load(path, position2[item.Code - 1]));
+                }
+                if (item.Id == GameData.user.ID)
+                {
+                    FightScene.Instance.InitView((FightPlayerModel)item,go);
+                    FightScene.Instance.LookAt();
                 }
             }
         }
