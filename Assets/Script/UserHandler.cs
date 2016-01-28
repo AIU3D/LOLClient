@@ -50,10 +50,11 @@ namespace Assets.Script
         {
             if (value)
             {
+                //关闭创建面板
+                SendMessage("CloseCreatePlane");
                 WarningManager.errors.Add(new WarningModel("创建成功", () =>
                 {
-                    //关闭创建面板
-                    SendMessage("CloseCreatePlane");
+                   
                     //直接申请登录
                     this.Wirte(Protocol.TYPE_USER, 0, UserProtocol.ONLINE_CREQ, null);
                 }));

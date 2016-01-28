@@ -103,6 +103,7 @@ public class SelectHandler:MonoBehaviour,IHandler
     private void Talk(string value)
     {
         //向聊天面板添加信息
+        SendMessage("TalkShow",value);
     }
     /// <summary>
     /// 自身的进入
@@ -111,6 +112,7 @@ public class SelectHandler:MonoBehaviour,IHandler
     private void Enter(SelectRoomDTO roomDTO)
     {
         room = roomDTO;
+        SendMessage("CloseMask");
         //刷新界面UI
         SelectEventUtil.refreshView(room);
 

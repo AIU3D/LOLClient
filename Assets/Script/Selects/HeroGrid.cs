@@ -16,7 +16,7 @@ public class HeroGrid : MonoBehaviour
     public void Init(int id)
     {
         this.id = id;
-        img.sprite = Resources.Load<Sprite>("");
+//        img.sprite = Resources.Load<Sprite>("");
         img.sprite = Resources.Load<Sprite>("HeroIcon/" + id);
     }
 
@@ -34,6 +34,7 @@ public class HeroGrid : MonoBehaviour
     {
         if (id != -1)
         {
+            SelectEventUtil.selectHero(id);
         }
     }
 }

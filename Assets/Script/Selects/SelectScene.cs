@@ -13,23 +13,22 @@ using UnityEngine.UI;
 /// </summary>
 public class SelectScene : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject heroBtn;
-    [SerializeField]
-    private Transform listParent;
-    [SerializeField]
-    private GameObject initMask;
-    [SerializeField]
-    private SelectGrid[] left;
-    [SerializeField]
-    private SelectGrid[] right;
-    [SerializeField]
-    private Button ready;
-    private Dictionary<int, HeroGrid> gridMap = new Dictionary<int, HeroGrid>(); 
+    private Dictionary<int, HeroGrid> gridMap = new Dictionary<int, HeroGrid>();
+    [SerializeField] private GameObject heroBtn;
+    [SerializeField] private GameObject initMask;
+    [SerializeField] private SelectGrid[] left;
+    [SerializeField] private Transform listParent;
+    [SerializeField] private Button ready;
+    [SerializeField] private SelectGrid[] right;
+    [SerializeField] private InputField talkInput; //聊天输入框
+    [SerializeField] private Text talkMessageShow; // 显示框
+    [SerializeField] private Scrollbar talkScroll; //滚动条
+
     private void Start()
     {
         SelectEventUtil.selected = Selected;
         SelectEventUtil.refreshView = RefreshView;
+        SelectEventUtil.selectHero = SelectHero;
         //显示遮罩防治误操作
         initMask.SetActive(true);
         //初始化英雄列表
@@ -42,6 +41,7 @@ public class SelectScene : MonoBehaviour
     {
         initMask.SetActive(false);
     }
+
     /// <summary>
     ///     初始化英雄列表
     /// </summary>
@@ -60,16 +60,16 @@ public class SelectScene : MonoBehaviour
             grid.Init(item);
             btn.transform.parent = listParent;
             btn.transform.localScale = Vector3.one;
-            btn.transform.localPosition = new Vector3((48 + index*72*(index%7)), (-42 + index/7*-72), 0);
-            gridMap.Add(item,grid);
+            btn.transform.localPosition = new Vector3(50-275 + 75*(index%7), -42+135 + index/7*-72, 0);
+            gridMap.Add(item, grid);
             index++;
         }
     }
 
-    void RefreshView(SelectRoomDTO room)
+    private void RefreshView(SelectRoomDTO room)
     {
         int team = room.GetTeam(GameData.user.ID);
-        
+
         if (team == 1)
         {
             for (int i = 0; i < room.TeamOne.Length; i++)
@@ -105,7 +105,7 @@ public class SelectScene : MonoBehaviour
             {
                 if (item.Hero != -1)
                 {
-                   selected.Add(item.Hero); 
+                    selected.Add(item.Hero);
                 }
             }
         }
@@ -123,7 +123,7 @@ public class SelectScene : MonoBehaviour
         //将已选的英雄从选择菜单设置状态改为不可选状态
         foreach (int item in gridMap.Keys)
         {
-            if (selected.Contains(item)||!ready.interactable)
+            if (selected.Contains(item) || !ready.interactable)
             {
                 gridMap[item].Deactive();
             }
@@ -137,5 +137,37 @@ public class SelectScene : MonoBehaviour
     public void Selected()
     {
         ready.interactable = false;
+    }
+
+    /// <summary>
+    ///     发送消息
+    /// </summary>
+    public void SendClick()
+    {
+        if (talkInput.text != string.Empty)
+        {
+            this.Wirte(Protocol.TYPE_SELECT, 0, SelectProtocol.TALK_CREQ, talkInput.text);
+            talkInput.text = string.Empty;
+        }
+    }
+
+    /// <summary>
+    ///     接收消息
+    /// </summary>
+    /// <param name="value"></param>
+    public void TalkShow(string value)
+    {
+        talkMessageShow.text += value + "\n"  ;
+        talkScroll.value = 0;
+    }
+
+    public void SelectHero(int id)
+    {
+        this.Wirte(Protocol.TYPE_SELECT,0,SelectProtocol.SELECT_CREQ,id);
+    }
+
+    public void ReadyClick()
+    {
+        this.Wirte(Protocol.TYPE_SELECT, 0, SelectProtocol.READY_CREQ, null);        
     }
 }

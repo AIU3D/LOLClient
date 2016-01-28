@@ -1,4 +1,5 @@
 ﻿using Assets.Script;
+using Assets.Script.Fight;
 using GameProtocol;
 using NetFrame.Auto;
 using UnityEngine;
@@ -11,12 +12,14 @@ public class
     private IHandler user;
     private IHandler match;
     private IHandler select;
+    private IHandler fight;
     void Start()
     {
         login = GetComponent<LoginHandler>();
         user = GetComponent<UserHandler>();
         match = GetComponent<MatchHandler>();
         select = GetComponent<SelectHandler>();
+        fight = GetComponent<FightHandler>();
     }
     void Update()
     {
@@ -48,6 +51,9 @@ public class
                 break;
             case Protocol.TYPE_SELECT:
                 select.MessageReceive(model);
+                break;
+            case Protocol.TYPE_FIGHT:
+                fight.MessageReceive(model);
                 break;
         }
     }

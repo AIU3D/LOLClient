@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 #endregion
 
-public class SelectGrid
+public class SelectGrid:MonoBehaviour
 {
     [SerializeField]
     private Image head; //头像
@@ -22,20 +22,21 @@ public class SelectGrid
         {
             if (model.Hero == -1)
             {
-                head.sprite = Resources.Load<Sprite>("HeroIcon/nul");
+                head.sprite = Resources.Load<Sprite>("HeroIcon/nil");
             }
             else
             {
-                head.sprite = Resources.Load<Sprite>("HeadIcon/" + model.Hero);
+                head.sprite = Resources.Load<Sprite>("HeroIcon/" + model.Hero);
             }
         }
         else
         {
-            head.sprite = Resources.Load<Sprite>("HeadIcon/NoEnter");
+            head.sprite = Resources.Load<Sprite>("HeroIcon/NoEnter");
         }
 
         if (model.IsReady)
         {
+            Selected();
         }
         else
         {

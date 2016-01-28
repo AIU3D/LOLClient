@@ -20,7 +20,7 @@ namespace Assets.Script.Main
             gameObject.SetActive(false);
         }
 
-        public void Click()
+        public void CreateRole()
         {
             if (nameField.text.Length > 6 || nameField.text == string.Empty)
             {
