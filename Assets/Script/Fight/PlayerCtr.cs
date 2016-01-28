@@ -14,6 +14,7 @@
 
 #endregion
 
+using Assets.Script.Common;
 using GameProtocol.Dto.FightDto;
 using UnityEngine;
 
@@ -24,6 +25,7 @@ namespace Assets.Script.Fight
         /// <summary>
         /// 角色数据
         /// </summary>
+       [HideInInspector]
         public FightPlayerModel data;
 
         /// <summary>
@@ -32,7 +34,12 @@ namespace Assets.Script.Fight
         protected Animator anim;
 
         private NavMeshAgent agent;
+        [SerializeField]
+        private GameObject mask; //战争迷雾剔除面板
+        [SerializeField]
+        private HeadSlider headSlider; // 3D血条
 
+        private int state = AnimState.IDLE;
         void Start()
         {
             anim = GetComponent<Animator>();
@@ -50,6 +57,7 @@ namespace Assets.Script.Fight
             //设置目标点
             agent.SetDestination(target);
             anim.SetInteger("state",AnimState.RUN);
+            state = AnimState.RUN;
         }
 
         /// <summary>
@@ -83,6 +91,44 @@ namespace Assets.Script.Fight
         public void Skilled()
         {
             
+        }
+
+        /// <summary>
+        /// 遮罩的显示与隐藏
+        /// </summary>
+        /// <param name="state"></param>
+        private void MaskState(bool state)
+        {
+            mask.SetActive(state);
+        }
+
+        public void Init(FightPlayerModel data)
+        {
+            this.data = data;
+            headSlider.Init(data);
+        }
+
+        private void Update()
+        {
+            switch (state)
+            {
+                case AnimState.RUN:
+                    if (agent.pathStatus == NavMeshPathStatus.PathComplete && agent.remainingDistance <= 0 && !agent.pathPending) //pathPending 正在计算路径，但还没有准备好
+                    {
+                        state = AnimState.IDLE;
+                        anim.SetInteger("state",AnimState.IDLE);
+                    }
+                    else
+                    {
+                        //代理目前定位上OffMeshLink。
+                        if(agent.isOnOffMeshLink)
+                        {
+                            //终止电流OffMeshLink。
+                            agent.CompleteOffMeshLink();
+                        }
+                    }
+                    break;
+            }
         }
     }
 }

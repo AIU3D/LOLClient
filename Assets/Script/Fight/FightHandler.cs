@@ -33,8 +33,8 @@ namespace Assets.Script.Fight
         private FightRoomModel room;
         [SerializeField] private Transform start1;
         [SerializeField] private Transform start2;
-        private Dictionary<int, GameObject> teamOne = new Dictionary<int, GameObject>();
-        private Dictionary<int, GameObject> teamTwo = new Dictionary<int, GameObject>();
+        private Dictionary<int, GameObject> models = new Dictionary<int, GameObject>();
+//        private Dictionary<int, GameObject> teamTwo = new Dictionary<int, GameObject>();
 
         public void MessageReceive(SocketModel model)
         {
@@ -43,7 +43,16 @@ namespace Assets.Script.Fight
                 case FightProtocol.START_BRO:
                     StartFight(model.GetMessage<FightRoomModel>());
                     break;
+                case FightProtocol.MOVE_BRO:
+                    Move(model.GetMessage<MoveDTO>());
+                    break;
             }
+        }
+
+        private void Move(MoveDTO value)
+        {
+            Vector3 target = new Vector3( value.X,value.Y,value.Z);
+            models[value.UserID].SendMessage("Move",target);
         }
 
         private void StartFight(FightRoomModel model)
@@ -57,12 +66,14 @@ namespace Assets.Script.Fight
                 {
                     path = "Player/" + item.Code;
                     go = Load(path, start1);
-                    this.teamOne.Add(item.Id,go );
+                    PlayerCtr ctrl = go.GetComponent<PlayerCtr>();
+                    ctrl.Init((FightPlayerModel)item);
+                    this.models.Add(item.Id,go );
                 }
                 else
                 {
                     path = "Build/1_" + item.Code;
-                    this.teamOne.Add(item.Id, Load(path, position1[item.Code - 1]));
+                    this.models.Add(item.Id, Load(path, position1[item.Code - 1]));
                 }
                 if(item.Id == GameData.user.ID)
                 {
@@ -78,12 +89,14 @@ namespace Assets.Script.Fight
                 {
                     path = "Player/" + item.Code;
                     go = Load(path, start2);
-                    this.teamTwo.Add(item.Id, go);
+                    PlayerCtr ctrl = go.GetComponent<PlayerCtr>();
+                    ctrl.Init((FightPlayerModel)item);
+                    this.models.Add(item.Id, go);
                 }
                 else
                 {
                     path = "Build/2_" + item.Code;
-                    this.teamTwo.Add(item.Id, Load(path, position2[item.Code - 1]));
+                    this.models.Add(item.Id, Load(path, position2[item.Code - 1]));
                 }
                 if (item.Id == GameData.user.ID)
                 {

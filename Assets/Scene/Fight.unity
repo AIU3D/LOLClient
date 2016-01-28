@@ -24280,7 +24280,8 @@ GameObject:
   - 4: {fileID: 432606112}
   - 33: {fileID: 432606114}
   - 23: {fileID: 432606113}
-  m_Layer: 0
+  - 65: {fileID: 432606115}
+  m_Layer: 4
   m_Name: diban3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24332,6 +24333,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 432606111}
   m_Mesh: {fileID: 4300046, guid: 879b9a168403a0946b4d3a5b0971dbd2, type: 3}
+--- !u!65 &432606115
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 432606111}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 8877.31934, y: 2371.50879, z: 10}
+  m_Center: {x: .000289916992, y: 1.08420217e-17, z: 232.899994}
 --- !u!1 &433644915
 GameObject:
   m_ObjectHideFlags: 0
@@ -26919,6 +26932,7 @@ GameObject:
   - 224: {fileID: 466682455}
   - 222: {fileID: 466682457}
   - 114: {fileID: 466682456}
+  - 114: {fileID: 466682458}
   m_Layer: 5
   m_Name: Plane
   m_TagString: Untagged
@@ -26973,6 +26987,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 466682454}
+--- !u!114 &466682458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 466682454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 309ba77ea117b0b45b51399cc05a460d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &468828592
 GameObject:
   m_ObjectHideFlags: 0
@@ -76414,7 +76439,8 @@ GameObject:
   - 4: {fileID: 1491683197}
   - 33: {fileID: 1491683199}
   - 23: {fileID: 1491683198}
-  m_Layer: 0
+  - 65: {fileID: 1491683200}
+  m_Layer: 4
   m_Name: diban2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76466,6 +76492,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1491683196}
   m_Mesh: {fileID: 4300052, guid: 879b9a168403a0946b4d3a5b0971dbd2, type: 3}
+--- !u!65 &1491683200
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1491683196}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 8897.06738, y: 3677, z: 10}
+  m_Center: {x: -.001953125, y: -1411, z: 1188.60999}
 --- !u!1 &1496595526
 GameObject:
   m_ObjectHideFlags: 0
@@ -76654,7 +76692,8 @@ GameObject:
   - 4: {fileID: 1506157799}
   - 33: {fileID: 1506157801}
   - 23: {fileID: 1506157800}
-  m_Layer: 0
+  - 65: {fileID: 1506157802}
+  m_Layer: 4
   m_Name: diban1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76706,6 +76745,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1506157798}
   m_Mesh: {fileID: 4300044, guid: 879b9a168403a0946b4d3a5b0971dbd2, type: 3}
+--- !u!65 &1506157802
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1506157798}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 9926.06055, y: 4077, z: 100}
+  m_Center: {x: .0029296875, y: 462, z: 247}
 --- !u!1 &1511569778
 GameObject:
   m_ObjectHideFlags: 0
@@ -96193,6 +96244,7 @@ MonoBehaviour:
   - {fileID: 1763405929}
   - {fileID: 671131695}
   - {fileID: 1206912973}
+  CameraSpeed: 1
 --- !u!114 &1926828161
 MonoBehaviour:
   m_ObjectHideFlags: 0

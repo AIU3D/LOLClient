@@ -436,6 +436,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 427858}
+  - 114: {fileID: 11449596}
   m_Layer: 0
   m_Name: Hp
   m_TagString: Untagged
@@ -1059,8 +1060,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 176746}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 10, z: 0}
-  m_LocalScale: {x: 1.5, y: 1, z: 1.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 482496}
   m_RootOrder: 9
@@ -1222,7 +1223,7 @@ Transform:
   m_GameObject: {fileID: 119854}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 50.7999992, z: 86.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 437128}
   - {fileID: 432368}
@@ -1478,6 +1479,19 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
+--- !u!114 &11449596
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 161530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e37c7721391d0ad4a8e66ea1dcfa61b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: {fileID: 11478820}
+  name: {fileID: 10252582}
 --- !u!114 &11478820
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -118,7 +118,7 @@ namespace Assets.Script.Common
         /// <param name="state"></param>
         public void SetBtnState(bool state)
         {
-            LevelUpButton.interactable = false;
+            LevelUpButton.interactable = state;
         }
 
         public void LevelUp()

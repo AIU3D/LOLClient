@@ -33,10 +33,5 @@ namespace Assets.Script.Common
                 front.localPosition = new Vector3(-1 * (1 - value) * 0.8f, 0);
             }
         }
-
-        void Update()
-        {
-            Value -= -1;
-        }
     }
 }
