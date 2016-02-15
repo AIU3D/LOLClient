@@ -33,13 +33,15 @@ namespace Assets.Script.Fight
         /// </summary>
         protected Animator anim;
 
-        private NavMeshAgent agent;
+        protected  NavMeshAgent agent;
         [SerializeField]
         private GameObject mask; //战争迷雾剔除面板
         [SerializeField]
         private HeadSlider headSlider; // 3D血条
+        [SerializeField]
+        private MeshRenderer head;
 
-        private int state = AnimState.IDLE;
+        protected int state = AnimState.IDLE;
         void Start()
         {
             anim = GetComponent<Animator>();
@@ -63,7 +65,7 @@ namespace Assets.Script.Fight
         /// <summary>
         /// 申请攻击
         /// </summary>
-        public void Attack(Transform[] target)
+        public virtual void Attack(Transform[] target)
         {
             
         }
@@ -71,7 +73,7 @@ namespace Assets.Script.Fight
         /// <summary>
         /// 攻击结束回调方法
         /// </summary>
-        public void Attacked()
+        public virtual void Attacked()
         {
 
         }
@@ -102,10 +104,24 @@ namespace Assets.Script.Fight
             mask.SetActive(state);
         }
 
-        public void Init(FightPlayerModel data)
+        public void Init(FightPlayerModel data,int myTeam)
         {
+            bool isFriend = data.Team == myTeam;
             this.data = data;
-            headSlider.Init(data);
+            headSlider.Init(data, isFriend);
+            head.material.SetTexture("_MainTex",Resources.Load<Texture>("HeroIcon/" + data.Code));
+            //如果不是己方单位，移出遮罩
+            //是己方单位，移出视野脚本
+            if (!isFriend)
+            {
+                gameObject.layer = LayerMask.NameToLayer("Enemy");
+                mask.SetActive(false);
+            }
+            else
+            {
+                gameObject.layer = LayerMask.NameToLayer("Friend");
+                Destroy(GetComponent<Eye>());
+            }
         }
 
         private void Update()
@@ -129,6 +145,11 @@ namespace Assets.Script.Fight
                     }
                     break;
             }
+        }
+
+        public void HpChange()
+        {
+            headSlider.ChangeHp(1f * data.Hp / data.HpMax);
         }
     }
 }

@@ -25,11 +25,16 @@ namespace Assets.Script.Common
         private SpriteSlider hp;
         [SerializeField]
         private TextMesh name;
-
-        public void Init(FightPlayerModel model)
+        [SerializeField]
+        private SpriteRenderer sr;
+        public void Init(FightPlayerModel model,bool isFriend)
         {
             hp.Value = model.Hp / (float)model.HpMax;
             name.text = model.Name;
+            if(isFriend)
+            {
+                sr.color = new Color(255, 255, 255, 100);
+            }
         }
 
         public void ChangeHp(float value)

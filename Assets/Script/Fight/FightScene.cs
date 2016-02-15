@@ -16,7 +16,6 @@
 
 #region
 
-using System.Runtime.InteropServices;
 using Assets.Script.Common;
 using GameProtocol;
 using GameProtocol.Constans;
@@ -33,6 +32,8 @@ namespace Assets.Script.Fight
         
         public static FightScene Instance;
 
+        public bool Dead = false;
+
         [SerializeField]
         private Image HeadIcon;
         [SerializeField]
@@ -44,6 +45,8 @@ namespace Assets.Script.Fight
         [SerializeField]
         private SkillGrid[] skills;
 
+        [SerializeField]
+        private Transform NumParent;//掉血数字父容器
         private Camera mainCamera;
         private GameObject hero;
         private void Start()
@@ -145,9 +148,19 @@ namespace Assets.Script.Fight
 
             RaycastHit[] hits = Physics.RaycastAll(ray, 200);
 
-            for (int i = 0; i < hits.Length; i++)
+            for (int i = hits.Length - 1; i >=0; i--)
             {
                 //如果是地方单位进行普通攻击
+                if(hits[i].transform.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+                {
+                    PlayerCtr ctr = hits[i].transform.GetComponent<PlayerCtr>();
+                    if(Vector3.Distance(hero.transform.position,hits[i].transform.position)<ctr.data.AtkRange)
+                    {
+                        this.Wirte(Protocol.TYPE_FIGHT, 0, FightProtocol.ATTACK_CREQ, ctr.data.Id);
+                        return;
+                    }
+                    continue;
+                }
                 //己方单位无视
                 //如果是地板层 则开始寻路
                 if(hits[i].transform.gameObject.layer == LayerMask.NameToLayer("Water"))
@@ -161,6 +174,33 @@ namespace Assets.Script.Fight
                 }
             }
         }
-    
+
+
+        public void NumUp(Transform p, string value)
+        {
+            GameObject hp = (GameObject)Instantiate(Resources.Load("prefab/Hp"));
+            hp.GetComponent<Text>().text = value;
+            hp.transform.parent = NumParent;
+            hp.transform.localScale = Vector3.one;
+            hp.transform.localPosition = Camera.main.WorldToScreenPoint(p.position) + new Vector3(30, 20);
+        }
+
+        internal void RefreshView(FightPlayerModel fightPlayerModel)
+        {
+            HpSlider.value = fightPlayerModel.Hp / (float)fightPlayerModel.HpMax;
+            Level.text = fightPlayerModel.Level.ToString();
+        }
+
+        /// <summary>
+        /// 刷新技能升级按钮
+        /// </summary>
+        public void ResfreshLeveUp()
+        {
+            foreach (SkillGrid skill in )
+            {
+                
+            }
+        }
+
     }
 }
